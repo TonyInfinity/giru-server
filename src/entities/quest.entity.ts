@@ -5,11 +5,13 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { AbstractEntity } from './abstract-entity';
 import * as slugify from 'slug';
 import { UserEntity } from './user.entity';
 import { classToPlain } from 'class-transformer';
+import { CommentEntity } from './comment.entity';
 
 @Entity('quests')
 export class QuestEntity extends AbstractEntity {
@@ -34,6 +36,9 @@ export class QuestEntity extends AbstractEntity {
 
   @ManyToOne((type) => UserEntity, (user) => user.quests, { eager: true })
   customer: UserEntity;
+
+  @OneToMany((type) => CommentEntity, comment => comment.quest)
+  comments: CommentEntity[]
 
   @Column('simple-array')
   tagList: string[];

@@ -12,7 +12,8 @@ import {
 import { AbstractEntity } from './abstract-entity';
 import * as bcrypt from 'bcrypt';
 import { QuestEntity } from './quest.entity';
-import { type } from 'os';
+import { CommentEntity } from './comment.entity';
+import { UserResponse } from 'src/models/user.model';
 
 @Entity('users')
 export class UserEntity extends AbstractEntity {
@@ -43,9 +44,12 @@ export class UserEntity extends AbstractEntity {
   @OneToMany((type) => QuestEntity, (quest) => quest.customer)
   quests: QuestEntity[];
 
-  @ManyToMany((type) => QuestEntity, quest => quest.acceptedBy)
+  @ManyToMany((type) => QuestEntity, (quest) => quest.acceptedBy)
   @JoinColumn()
-  accepts: QuestEntity[]
+  accepts: QuestEntity[];
+
+  @OneToMany((type) => CommentEntity, (comment) => comment.author)
+  comments: CommentEntity[];
 
   @BeforeInsert()
   async hashPassword() {
@@ -56,8 +60,8 @@ export class UserEntity extends AbstractEntity {
     return await bcrypt.compare(attemp, this.password);
   }
 
-  toJSON() {
-    return classToPlain(this);
+  toJSON(): UserResponse {
+    return <UserResponse>classToPlain(this);
   }
 
   toProfile(user?: UserEntity) {
@@ -69,7 +73,7 @@ export class UserEntity extends AbstractEntity {
     delete profile.followers;
     return {
       ...profile,
-      following,
+      following
     };
   }
 }

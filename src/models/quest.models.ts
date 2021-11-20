@@ -1,4 +1,5 @@
 import { IsArray, IsOptional, IsString } from 'class-validator';
+import { ProfileResponse } from './user.model';
 
 export class CreateQuestDTO {
   @IsString()
@@ -43,4 +44,17 @@ export interface FindAllQuery extends FindFeedQuery {
   tag?: string;
   customer?: string;
   accepted?: string;
+}
+
+export interface QuestResponse {
+  slug: string;
+  title: string;
+  description: string;
+  content: string;
+  tagList: string[];
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  accepted: boolean | null;
+  // acceptsCount
+  customer: ProfileResponse;
 }
