@@ -27,14 +27,14 @@ export class QuestEntity extends AbstractEntity {
   @Column()
   content: string;
 
-  @ManyToMany((type) => UserEntity, (user) => user.accepts, { eager: true })
+  @ManyToMany((type) => UserEntity, (user) => user.accepts)
   @JoinTable()
   acceptedBy: UserEntity[];
 
   //   @RelationCount((quest: QuestEntity) => quest.acceptedBy)
   //   acceptsCount: number;
 
-  @ManyToOne((type) => UserEntity, (user) => user.quests, { eager: true })
+  @ManyToOne((type) => UserEntity, (user) => user.quests)
   customer: UserEntity;
 
   @OneToMany((type) => CommentEntity, comment => comment.quest)

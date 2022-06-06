@@ -10,13 +10,13 @@ export class CommentEntity extends AbstractEntity {
   @Column()
   content: string;
 
-  @ManyToOne((type) => UserEntity, (user) => user.comments, { eager: true })
+  @ManyToOne((type) => UserEntity, (user) => user.comments)
   author: UserEntity;
 
-  @ManyToOne((type) => QuestEntity, quest => quest.comments)
-  quest: QuestEntity
+  @ManyToOne((type) => QuestEntity, (quest) => quest.comments)
+  quest: QuestEntity;
 
   toJSON() {
-      return <CommentResponse>classToPlain(this);
+    return <CommentResponse>classToPlain(this);
   }
 }

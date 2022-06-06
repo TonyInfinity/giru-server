@@ -109,11 +109,13 @@ export class QuestController {
   }
 
   @Post('/:slug/comments')
+  @UseGuards(AuthGuard())
   async createComment(
+    @Param('slug') slug: string,
     @User() user: UserEntity,
     @Body('comment', ValidationPipe) data: CreateCommentDTO,
   ): Promise<ResponseObject<'comment', CommentResponse>> {
-    const comment = await this.commentService.createComment(user, data);
+    const comment = await this.commentService.createComment(user, data, slug);
     return { comment };
   }
 

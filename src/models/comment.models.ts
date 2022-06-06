@@ -9,7 +9,6 @@ export class CreateCommentDTO {
 
 export class CommentResponse {
   id: number;
-
   createdAt: Date | string;
   updatedAt: Date | string;
   content: string;
